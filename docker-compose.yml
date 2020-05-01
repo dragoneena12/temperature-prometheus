@@ -4,13 +4,14 @@ services:
     image: prom/prometheus
     container_name: prometheus
     restart: always
+    user: 0:0
     ports:
-      - '9090:9090'
+      - 9090:9090
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./data/prometheus:/etc/prometheus/data
+      - ./data/prometheus:/prometheus
     networks:
-      docker_network:
+      https_network:
         ipv4_address: 172.24.0.7
   cadvisor:
     image: budry/cadvisor-arm
