@@ -1,4 +1,2 @@
 prometheus_client
-flask
-werkzeug
 RPi.GPIO

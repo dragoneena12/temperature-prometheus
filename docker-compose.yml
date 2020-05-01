@@ -1,29 +1,56 @@
 version: '3'
 services:
-  prometheus_temperature:
+  prometheus:
     image: prom/prometheus
-    container_name: prometheus_temperature
+    container_name: prometheus
     restart: always
     ports:
-      - '9091:9090'
+      - '9090:9090'
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/etc/prometheus/data
     networks:
       docker_network:
-        ipv4_address: 172.24.0.3
-  python_temperature:
+        ipv4_address: 172.24.0.7
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      docker_network:
+        ipv4_address: 172.24.0.8
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - textfile:/var/lib/prometheus/node-exporter
+    networks:
+      docker_network:
+        ipv4_address: 172.24.0.9
+  temperature:
     build:
       context: .
       dockerfile: ./config/python/Dockerfile
     container_name: python_temperature
     restart: always
     privileged: true
-    expose:
-      - '8000'
+    volumes:
+      textfile:/textfile
     networks:
       docker_network:
-        ipv4_address: 172.24.0.4
+        ipv4_address: 172.24.0.10
+  
 networks:
   docker_network:
     external: true
+volumes:
+  textfile:
