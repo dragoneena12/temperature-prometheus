@@ -44,7 +44,7 @@ services:
     restart: always
     privileged: true
     volumes:
-      textfile:/textfile
+      - textfile:/textfile
     networks:
       docker_network:
         ipv4_address: 172.24.0.10
