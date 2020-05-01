@@ -24,10 +24,13 @@ def index():
 
 @app.before_request
 def before_request():
-    result = module.read()
-    if result.is_valid():
-        g.labels('temperature').set(result.temperature)
-        g.labels('humidity').set(result.humidity)
+    while True:
+        result = module.read()
+        if result.is_valid():
+            g.labels('temperature').set(result.temperature)
+            g.labels('humidity').set(result.humidity)
+            break
+        time.sleep(1)
 
 app_dispatch = DispatcherMiddleware(app, {
     '/metrics': make_wsgi_app()
