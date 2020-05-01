@@ -13,7 +13,7 @@ services:
       docker_network:
         ipv4_address: 172.24.0.7
   cadvisor:
-    image: google/cadvisor:latest
+    image: budry/cadvisor-arm
     container_name: cadvisor
     restart: always
     volumes:
