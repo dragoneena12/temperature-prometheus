@@ -1,5 +1,5 @@
 from flask import Flask
-from werkzeug.wsgi import DispatcherMiddleware
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from prometheus_client import make_wsgi_app, Counter
 import RPi.GPIO as GPIO
