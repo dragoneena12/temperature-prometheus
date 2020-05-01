@@ -18,6 +18,8 @@ services:
       dockerfile: ./config/python/Dockerfile
     container_name: python_temperature
     restart: always
+    volumes:
+      /dev:/dev
     networks:
       docker_network:
         ipv4_address: 172.24.0.4
