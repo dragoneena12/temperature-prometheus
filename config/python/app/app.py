@@ -1,7 +1,7 @@
 from flask import Flask
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
-from prometheus_client import make_wsgi_app, Gauge
+from prometheus_client import CollectorRegistry, make_wsgi_app, Gauge
 import RPi.GPIO as GPIO
 import dht11
 import time
