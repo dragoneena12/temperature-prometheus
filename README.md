@@ -1,0 +1,2 @@
+# temperature-prometheus
+prometheusで気温取得

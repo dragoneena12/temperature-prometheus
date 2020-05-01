@@ -1,0 +1,26 @@
+version: '3'
+services:
+  prometheus_temperature:
+    image: prom/prometheus
+    container_name: prometheus_temperature
+    restart: always
+    ports:
+      - '9090:9091'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/etc/prometheus/data
+    networks:
+      docker_network:
+        ipv4_address: 172.24.0.3
+  python_temperature:
+    build:
+      context: .
+      dockerfile: ./config/python/Dockerfile
+    container_name: python_temperature
+    restart: always
+    networks:
+      docker_network:
+        ipv4_address: 172.24.0.4
+networks:
+  docker_network:
+    external: true
