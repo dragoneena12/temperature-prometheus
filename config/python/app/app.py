@@ -14,7 +14,8 @@ GPIO.cleanup()
 
 module = dht11.DHT11(pin=24)
 
-g = Gauge('dht11', 'dht11')
+registry = CollectorRegistry()
+g = Gauge('dht11', 'dht11', ['kind'], registry=registry)
 
 app = Flask(__name__)
 
@@ -37,4 +38,4 @@ app_dispatch = DispatcherMiddleware(app, {
 })
 
 if __name__ == '__main__':
-    run_simple('localhost', 8000, app_dispatch, use_reloader=True, use_debugger=True, use_evalex=True)
+    run_simple('172.24.0.4', 8000, app_dispatch, use_reloader=True, use_debugger=True, use_evalex=True)
