@@ -2,8 +2,19 @@ from flask import Flask
 from werkzeug.wsgi import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from prometheus_client import make_wsgi_app, Counter
+import RPi.GPIO as GPIO
+import dht11
+import time
+from datetime import datetime
 
-c = Counter('my_counter', 'Description of access counter')
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
+
+module = dht11.DHT11(pin=24)
+
+g = Gauge('dht11', 'dht11')
 
 app = Flask(__name__)
 
@@ -13,7 +24,11 @@ def index():
 
 @app.before_request
 def before_request():
-    c.inc()
+    result = module.read()
+    if result.is_valid():
+        g.labels('temperature').set(result.temperature)
+        g.labels('humidity').set(result.humidity)
+        break
 
 app_dispatch = DispatcherMiddleware(app, {
     '/metrics': make_wsgi_app()
