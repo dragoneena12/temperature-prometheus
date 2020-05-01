@@ -28,7 +28,6 @@ def before_request():
     if result.is_valid():
         g.labels('temperature').set(result.temperature)
         g.labels('humidity').set(result.humidity)
-        break
 
 app_dispatch = DispatcherMiddleware(app, {
     '/metrics': make_wsgi_app()
