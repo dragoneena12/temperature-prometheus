@@ -18,7 +18,7 @@ services:
       dockerfile: ./config/python/Dockerfile
     container_name: python_temperature
     restart: always
-    volumes:
+    devices:
       /dev:/dev
     networks:
       docker_network:
