@@ -11,7 +11,7 @@ services:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
     networks:
-      https_network:
+      docker_network:
         ipv4_address: 172.24.0.7
   cadvisor:
     image: budry/cadvisor-arm
