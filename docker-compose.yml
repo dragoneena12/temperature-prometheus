@@ -19,6 +19,8 @@ services:
     container_name: python_temperature
     restart: always
     privileged: true
+    expose:
+      - '8000'
     networks:
       docker_network:
         ipv4_address: 172.24.0.4
